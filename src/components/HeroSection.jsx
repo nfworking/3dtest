@@ -3,7 +3,7 @@ import Model from './Model';
 
 function HeroSection() {
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh' }}>
+    <div >
       <Model
         src="/something.glb"
         alt="A 3D Model"
