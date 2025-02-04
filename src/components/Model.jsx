@@ -1,60 +1,28 @@
-import React from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment } from '@react-three/drei';
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import React, { useRef, useEffect } from 'react';
 
-class Duck extends React.Component {
-  constructor(props) {
-    super(props);
-    this.meshRef = React.createRef();
-    this.state = {
-      model: null
-    };
-  }
+const Model = ({ src, alt, ...props }) => {
+  const modelViewerRef = useRef(null);
 
-  componentDidMount() {
-    const loader = new GLTFLoader();
-    loader.load('/something.glb', (gltf) => {
-      this.setState({ model: gltf.scene });
-    });
-  }
+  useEffect(() => {
+    if (modelViewerRef.current) {
+      // Optional: Access and manipulate the model-viewer API if needed
+      // For example, you can set environment images or other properties here
+      // modelViewerRef.current.environmentImage = 'neutral';
+    }
+  }, []);
 
-  render() {
-    return this.state.model ? (
-      <primitive 
-        object={this.state.model} 
-        ref={this.meshRef}
-        scale={[2, 2, 2]}
-        position={[0, -1, 0]}
-      />
-    ) : null;
-  }
-}
+  return (
+    <model-viewer
+      ref={modelViewerRef}
+      src={src}
+      alt={alt}
+      camera-controls  // Enable orbit controls
+      auto-scale      // Scale model to fit viewer
+      {...props}       // Spread any additional props to the model-viewer
+    >
+      <slot name="poster"></slot> {/* If you want a custom poster */}
+    </model-viewer>
+  );
+};
 
-class Scene extends React.Component {
-  render() {
-    return (
-      <Canvas camera={{ position: [5, 5, 5], fov: 75 }}>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <Duck />
-        <OrbitControls />
-        <Environment preset="sunset" background />
-      </Canvas>
-    );
-  }
-}
-
-class ThreeDModelViewer extends React.Component {
-  render() {
-    return (
-      <div className='mt-20 ml-48' style={{ width: '100%', height: '100vh' }}>
-        <Scene />
-      </div>
-    );
-  }
-}
-
-export default ThreeDModelViewer;
+export default Model;
