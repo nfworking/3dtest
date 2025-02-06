@@ -23,7 +23,7 @@ const Navbar = () => {
               <a href="/" className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">
                 Home
               </a>
-              <a href="/about" className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">
+              <a href="/Viewer" className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">
                 About
               </a>
               <a href="/services" className="hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">
